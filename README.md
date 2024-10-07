@@ -7,7 +7,7 @@ QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating
 - [Features](#features)
 - [Usage](#usage)
 - [Installation](#installation)
-- [Customizing BAN Parameters](#customazing-BAN-parameters)
+- [Customizing BAN Parameters](#customazing-ban-parameters)
 - [Contributing](#contributing)
 - [License](#license)
 
