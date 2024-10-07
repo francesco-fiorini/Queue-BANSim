@@ -24,14 +24,18 @@ QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating
     ```
 2. Open MATLAB and navigate to the repository folder.
 
-3. Customize the distribution parameters for interarrival and service times as Bounded Algorithmic Numbers to simulate heavy-tailed traffic.
+3. Open the "SimulatorScript" file.
 
-4. Run the simulation script corresponding to the desired queuing policy:
+4. Customize the distribution parameters for interarrival and service times as Bounded Algorithmic Numbers to simulate heavy-tailed traffic.
+
+5. Select the proper "gg1simulator" method corresponding to the desired queuing policy:
    - For FIFO: `nomefile1.m`
    - For LIFO: `nomefile2.m`
    - For SIRO: `nomefile3.m`
    - For SJF: `nomefile4.m`
    - For SRPT: `nomefile5.m`
+
+6. Run the main script.
 
 ## Installation
 Make sure MATLAB is installed on your system. Simply clone the repository, and you can immediately run the simulations.
