@@ -20,7 +20,7 @@ QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating
 ## Usage
 1. Clone this repository:
     ```bash
-    git clone https://github.com/your-username/QueueBANSim.git
+    git clone https://github.com/francesco-fiorini/QueueBANSim.git
     ```
 2. Open MATLAB and navigate to the repository folder.
 
