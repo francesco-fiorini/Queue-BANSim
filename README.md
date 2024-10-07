@@ -1,16 +1,21 @@
 # QueueBANSim: GI/G/1 Queue Simulator with Bounded Algorithmic Numbers (BANs)
 
 ## Overview
-QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating Bounded Algorithmic Numbers (BANs), in accordance with the Alpha Theory (see https://doi.org/10.1016/S0723-0869(03)80038-5 for further mathematical details). The software allows for the simulation of queuing processes based on five different scheduling policies, which can be chosen to suit your specific use case.
+QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating Bounded Algorithmic Numbers (BANs), in accordance with Alpha Theory (see https://doi.org/10.1016/S0723-0869(03)80038-5 for further mathematical details). The software allows the simulation of GI/G/1 queuing processes based on five different scheduling policies, which can be chosen according to the specific use case (see below). The simulator enables numerical evaluation of performance in terms of average delay, even in the case of infinite service/arrival moments.
 
 ## Features
-- **Bounded Algorithmic Numbers (BANs):** The simulator allows setting the interarrival and service time distributions using BANs to simulate heavy-tailed traffic with infinite variance (well-defined within the Alpha Theory).
-- **Customizable Queue Policies:** Users can select from five distinct queuing policies for simulation:
+- **Bounded Algorithmic Numbers (BANs):** The simulator allows setting the interarrival and service time distributions parameters using BANs to simulate heavy-tailed traffic with infinite (non-diverging) moments (well-defined within the Alpha Theory).
+- **Customizable Queue Policies:** Users can choose from five distinct queuing policies for simulation:
   1. **FIFO (First In, First Out)** - File: `nomefile1.m`
   2. **LIFO (Last In, First Out)** - File: `nomefile2.m`
   3. **SIRO (Service In Random Order)** - File: `nomefile3.m`
   4. **SJF (Shortest Job First)** - File: `nomefile4.m`
   5. **SRPT (Shortest Remaining Processing Time)** - File: `nomefile5.m`
+- **Delay performance evaluation:** The simulator provides the following outputs:
+  1. Average queueing delay,
+  2. Corresponding theoretical bounds and approximations,
+  3. Average number of customers in the system.
+
 
 ## Usage
 1. Clone this repository:
