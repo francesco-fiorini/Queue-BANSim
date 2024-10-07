@@ -3,6 +3,12 @@
 ## Overview
 QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating Bounded Algorithmic Numbers (BANs), in accordance with Alpha Theory (see https://doi.org/10.1016/S0723-0869(03)80038-5 for further mathematical details). The software allows the simulation of GI/G/1 queuing processes based on five different scheduling policies, which can be chosen according to the specific use case (see below). The simulator enables numerical evaluation of performance in terms of average delay, even in the case of infinite service/arrival moments.
 
+## Table of Contents
+- [Features](#features)
+- [Installation and Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Features
 - **Bounded Algorithmic Numbers (BANs):** The simulator allows setting the interarrival and service time distributions parameters using BANs to simulate heavy-tailed traffic with infinite (non-diverging) moments (well-defined within the Alpha Theory).
 - **Customizable Queue Policies:** Users can choose from five distinct queuing policies for simulation:
@@ -44,7 +50,7 @@ Make sure MATLAB is installed on your system. Simply clone the repository, and y
 The general interarrival and service time distributions can be customized using Bounded Algorithmic Numbers (BANs) to reflect heavy-tailed characteristics with infinite variance. Ensure you configure these parameters in the script according to your traffic model needs.
 
 ## Contributing
-Feel free to contribute by opening issues or submitting pull requests for additional features or optimizations.
+Contributions are welcome! Please contact francesco.fiorini@phd.unipi.it for suggested changes.
 
 ## License
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
