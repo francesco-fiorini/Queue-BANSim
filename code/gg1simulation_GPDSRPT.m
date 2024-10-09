@@ -1,5 +1,5 @@
 %% QueueBANSim
-% GG1 queue simulation with SJF policy
+% GG1 queue simulation with SRPT policy
 % Author: Francesco Fiorini
 % Mail: francesco.fiorini@phd.unipi.it
 
