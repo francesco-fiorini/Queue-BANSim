@@ -32,7 +32,7 @@ QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating
     ```
 2. Open MATLAB and navigate to the repository folder.
 
-3. Open the File:`SimulatorScript.m` file.
+3. Open the `SimulatorScript.m` file.
 
 4. Customize the distribution parameters for interarrival and service times as Bounded Algorithmic Numbers to simulate heavy-tailed traffic.
 
