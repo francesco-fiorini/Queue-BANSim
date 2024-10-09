@@ -46,7 +46,7 @@ QueueBANSim is a MATLAB-based simulator for GI/G/1 queuing systems incorporating
 6. Run the main script.
 
 ## Installation
-Make sure MATLAB is installed on your system. To run the simulation, you must have installed BAN and BANARRAY classes in the current repository. Feel free to contact francesco.fiorini@phd.unipi.it for further details on the latter aspect.
+Make sure MATLAB is installed on your system. To run the simulation, you should have installed BAN and BANARRAY classes in the current repository. Feel free to contact francesco.fiorini@phd.unipi.it for further details on the latter aspect.
 
 ## Customizing BAN Parameters
 The general interarrival and service time distributions can be customized using Bounded Algorithmic Numbers (BANs) to reflect heavy-tailed characteristics with infinite variance. Ensure you configure these parameters in the script according to your traffic model needs. The example provided refers to the case of Euclidean LogNormal and Weibull distributions for modelling interarrival and service times, respectively. For different Euclidean distributions applications, please see [Contributing](#contributing).
