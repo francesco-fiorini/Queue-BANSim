@@ -1,4 +1,4 @@
-%% SCRIPT QueueBANSim
+%% Main SCRIPT of QueueBANSim Simulator
 % Author: Francesco Fiorini
 % Mail: francesco.fiorini@phd.unipi.it
 
@@ -77,6 +77,6 @@ else
 end
 
 % Average number of customers in the queue from Little's law
- EQ_mean=mean(EQ);
+EQ_mean=mean(EQ);
  
 
