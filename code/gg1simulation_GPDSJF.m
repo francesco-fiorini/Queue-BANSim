@@ -26,38 +26,50 @@ function [mean_delay,mean_queue_size] = gg1simulation_GPDSJF(muL_a,sigmaL_a,lamb
     enterservice_time(1).bArr = arrival_time(1);
     departure_time(1).bArr = enterservice_time(1) + service_time(1);
     
-    % Simulation process for SJF (non-preemptive)
+    % vettore di flag “non ancora servito”
+    served = false(total_arrivals,1);
+
+
+    served(1)            = true;
+
+% --- 3) Loop sui successivi arrivi ---
     for i = 2:total_arrivals
-        % Check if the system is free at the moment of arrival
-        if departure_time(i - 1) <= arrival_time(i)
-            enterservice_time(i).bArr = arrival_time(i);  % No waiting, enters immediately
-        else
-            % Shortest Job First: find the job with the smallest service time among those waiting
-            min_service_time = Ban(1,10);  % Initialize with a large number
-            selected_job = 0;
     
-            % Search for the job with the shortest service time that has not started service
+        t_free = departure_time(i-1);  % quando il server si libera
+    
+        if t_free <= arrival_time(i)
+            % server libero: il job i parte subito
+            enterservice_time(i).bArr = arrival_time(i);
+    
+        else
+            % server occupato: cerco in coda il job SJF
+            min_srv    = Ban(1,10);  % “valore infinito” in Ban
+            selected_j = 0;
+    
             for j = 1:i-1
-                if arrival_time(j) <= departure_time(i - 1) &&  isnan(enterservice_time(j))
-                    if service_time(j) < min_service_time
-                        min_service_time = service_time(j);
-                        selected_job = j;
+                % filtro solo i job già arrivati E non ancora serviti
+                if arrival_time(j) <= t_free && ~served(j)
+                    if service_time(j) < min_srv
+                        min_srv    = service_time(j);
+                        selected_j = j;
                     end
                 end
             end
     
-            % If a job is found with the smallest service time, update its service time
-            if selected_job > 0
-                enterservice_time(selected_job).bArr = departure_time(i - 1);
-                departure_time(selected_job).bArr = enterservice_time(selected_job) + service_time(selected_job);
+            if selected_j > 0
+                % programma il job selezionato
+                enterservice_time(selected_j).bArr = t_free;
+                departure_time(selected_j).bArr    = t_free + service_time(selected_j);
+                served(selected_j)           = true;
             end
     
-            % The current job will enter the queue and start service
-            enterservice_time(i).bArr = departure_time(i - 1);
+            % poi programma il job i (parte appena il server si libera)
+            enterservice_time(i).bArr = t_free;
         end
     
-        % Calculate the departure time for the current job
+        % in ogni caso chiudo il job i
         departure_time(i).bArr = enterservice_time(i) + service_time(i);
+        served(i)         = true;
     end
 
     % Calculate the total delay
