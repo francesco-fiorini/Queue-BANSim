@@ -38,7 +38,7 @@ function [mean_delay,mean_queue_size] = gg1simulation_GPDSJF(muL_a,sigmaL_a,lamb
     
             % Search for the job with the shortest service time that has not started service
             for j = 1:i-1
-                if arrival_time(j) <= departure_time(i - 1) &&  departure_time(i - 1)<departure_time(j)
+                if arrival_time(j) <= departure_time(i - 1) &&  isnan(enterservice_time(j))
                     if service_time(j) < min_service_time
                         min_service_time = service_time(j);
                         selected_job = j;
