@@ -31,7 +31,7 @@ rho = lambda / mu; % utilization coefficient
 
 total_arrivals = 10000; % number of arrivals
 num_simu = 5; % number of simulations
-
+use_factor=40/100;
 ED = zeros(num_simu,1,'like',BanArray); % average total delay E[T]=E[Tw]+E[Ts]
 
 %I run the simulation num_sim times
