@@ -6,34 +6,34 @@
 function [mean_delay, mean_queue_size] = gg1simulation_GPDSRPT(...
         muL_a, sigmaL_a, lambdaW_s, k_s, total_arrivals, use_factor)
 
-    % --- 1) Preallocazione e generazione tempi ---
+    % --- 1) Preallocation and time generation ---
     arrival_time      = zeros(total_arrivals,1,'like',BanArray);
     enterservice_time = zeros(total_arrivals,1,'like',BanArray);
     departure_time    = zeros(total_arrivals,1,'like',BanArray);
     
-    % service_time e remaining_time come BanArray
+    % service_time and remaining_time as BanArray
     service_time   = randWeibullEuclidea(lambdaW_s, k_s, total_arrivals);
     remaining_time = service_time;  
 
-    % interarrival log‑normal, cumulativo
+    % log-normal interarrival, cumulative
     dt_support      = randLogNormEuclidea(muL_a, sigmaL_a, total_arrivals) * Ban(1,1);
     arrival_time(1).bArr = dt_support(1);
     for i = 2:total_arrivals
         arrival_time(i).bArr = arrival_time(i-1) + dt_support(i);
     end
 
-    % --- 2) Variabili di simulazione ---
+    % --- 2) Simulation variables ---
     current_time   = Ban(0);
     next_arrival   = 1;
-    next_departure = Ban(1,10);     % “infinito” per servizio iniziale
+    next_departure = Ban(1,10);     % “infinity” for initial service
     in_service     = false;
     current_job    = 0;
     served_count   = 0;
-    waiting_queue  = [];           % indici di job in coda
+    waiting_queue  = [];           % indices of jobs in queue
 
-    % --- 3) Loop eventi fino a servire tutti i job ---
+    % --- 3) Event loop until all jobs are served ---
     while served_count < total_arrivals
-        % 3.1) Prossimi istanti
+        % 3.1) Next event times
         if next_arrival <= total_arrivals
             t_arr = arrival_time(next_arrival);
         else
@@ -41,45 +41,45 @@ function [mean_delay, mean_queue_size] = gg1simulation_GPDSRPT(...
         end
         t_dep = next_departure;
 
-        % 3.2) Scegli evento: arrivo vs dipartita
+        % 3.2) Choose event: arrival vs departure
         if t_arr < t_dep
-            % --- Arrivo di job next_arrival ---
+            % --- Arrival of job next_arrival ---
             current_time = t_arr;
             j = next_arrival;
             waiting_queue(end+1) = j;
             next_arrival = next_arrival + 1;
 
             if ~in_service
-                % se server libero, estrai subito il più corto
+                % if server is free, immediately pick the shortest job
                 [sel, waiting_queue] = popShortest(waiting_queue, remaining_time);
                 current_job    = sel;
                 in_service     = true;
                 enterservice_time(sel).bArr = current_time;
                 next_departure = current_time + remaining_time(sel);
             else
-                % se server occupato, verifica preemption
+                % if server is busy, check for preemption
                 if remaining_time(j) < remaining_time(current_job)
-                    % 1) pausa job corrente
+                    % 1) pause current job
                     remaining_time(current_job).bArr = ...
                         remaining_time(current_job) - (current_time - enterservice_time(current_job));
                     waiting_queue(end+1) = current_job;
-                    % 2) fai partire job j
+                    % 2) start job j
                     current_job = j;
                     enterservice_time(j).bArr = current_time;
                     next_departure = current_time + remaining_time(j);
-                    % 3) togli j dalla waiting_queue
+                    % 3) remove j from waiting_queue
                     waiting_queue = waiting_queue(waiting_queue~=j);
                 end
             end
 
         else
-            % --- Dipartita di current_job ---
+            % --- Departure of current_job ---
             current_time = t_dep;
             departure_time(current_job).bArr = current_time;
             served_count = served_count + 1;
             in_service   = false;
 
-            % se coda non vuota, estrai il più corto
+            % if queue is not empty, pick the shortest job
             if ~isempty(waiting_queue)
                 [sel, waiting_queue] = popShortest(waiting_queue, remaining_time);
                 current_job    = sel;
@@ -92,28 +92,28 @@ function [mean_delay, mean_queue_size] = gg1simulation_GPDSRPT(...
         end
     end
 
-    % --- 4) Calcolo metriche ---
-    % ritardo per job
+    % --- 4) Metrics computation ---
+    % delay per job
     delay = departure_time - arrival_time;
-    % somma ritardi (in Ban)
+    % sum of delays (in Ban)
     sum_delay = delay(1);
     for i = 2:total_arrivals
         sum_delay = sum_delay + delay(i);
     end
     mean_delay = sum_delay / total_arrivals;
 
-    % Little: media jobs in sistema = somma ritardi / tempo totale
+    % Little’s law: average jobs in system = sum of delays / total time
     T_end = departure_time(total_arrivals);
     mean_queue_size = sum_delay / T_end;
 
-    % % varianza dei tempi di waiting Tw = enterservice_time – arrival_time
+    % % variance of waiting times Tw = enterservice_time – arrival_time
     % Tw = enterservice_time - arrival_time;
     % mean_Tw = mean(Tw);
     % Tw2_mean = mean((Tw - mean_Tw).^2) * total_arrivals/(total_arrivals-1);
 end
 
 % ------------------------------------------------------------
-% Helper: estrae da queue l’indice col remaining_time minimo
+% Helper: extracts from queue the index with minimum remaining_time
 function [sel, new_queue] = popShortest(queue, remaining_time)
     sel = queue(1);
     minRT = remaining_time(sel);
